@@ -1,0 +1,38 @@
+-- Hàm tải mã từ một URL
+function downloadScript(url)
+    local success, result = pcall(function()
+        return game:HttpGet(url)  -- Tải nội dung mã từ URL
+    end)
+    
+    if success then
+        return result  -- Trả về nội dung mã đã tải
+    else
+        warn("Lỗi khi tải mã từ URL: " .. url)
+        return nil
+    end
+end
+
+-- Hàm thực thi mã Lua
+function executeScript(scriptContent)
+    if scriptContent then
+        local success, errorMessage = pcall(function()
+            loadstring(scriptContent)()  -- Thực thi mã đã tải
+        end)
+
+        if not success then
+            warn("Lỗi khi thực thi mã: " .. errorMessage)
+        end
+    else
+        warn("Không có mã để thực thi.")
+    end
+end
+
+-- Hàm chính để tải và thực thi mã
+function main()
+    local url = "https://raw.githubusercontent.com/hihahahahax/Uu/refs/heads/main/Hhhe"  -- URL của mã
+    local scriptContent = downloadScript(url)  -- Tải mã từ URL
+    executeScript(scriptContent)  -- Thực thi mã đã tải
+end
+
+-- Gọi hàm chính
+main()
